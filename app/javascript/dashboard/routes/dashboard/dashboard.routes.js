@@ -6,9 +6,7 @@ import { routes as companyRoutes } from './companies/routes';
 import { routes as notificationRoutes } from './notifications/routes';
 import { routes as inboxRoutes } from './inbox/routes';
 import { frontendURL } from '../../helper/URLHelper';
-import helpcenterRoutes from './helpcenter/helpcenter.routes';
 import campaignsRoutes from './campaigns/campaigns.routes';
-import { routes as captainRoutes } from './captain/captain.routes';
 import AppContainer from './Dashboard.vue';
 import Suspended from './suspended/Index.vue';
 import NoAccounts from './noAccounts/Index.vue';
@@ -16,10 +14,30 @@ import NoAccounts from './noAccounts/Index.vue';
 export default {
   routes: [
     {
+      path: frontendURL('accounts/:accountId/captain/:pathMatch(.*)*'),
+      redirect: to => ({
+        name: 'home',
+        params: { accountId: to.params.accountId },
+      }),
+    },
+    {
+      path: frontendURL('accounts/:accountId/settings/captain/:pathMatch(.*)*'),
+      redirect: to => ({
+        name: 'general_settings_index',
+        params: { accountId: to.params.accountId },
+      }),
+    },
+    {
+      path: frontendURL('accounts/:accountId/portals/:pathMatch(.*)*'),
+      redirect: to => ({
+        name: 'home',
+        params: { accountId: to.params.accountId },
+      }),
+    },
+    {
       path: frontendURL('accounts/:accountId'),
       component: AppContainer,
       children: [
-        ...captainRoutes,
         ...inboxRoutes,
         ...conversation.routes,
         ...settings.routes,
@@ -27,7 +45,6 @@ export default {
         ...companyRoutes,
         ...searchRoutes,
         ...notificationRoutes,
-        ...helpcenterRoutes.routes,
         ...campaignsRoutes.routes,
       ],
     },

@@ -26,6 +26,18 @@ const {
   DEPLOYMENT_ENV: deploymentEnv,
 } = window.globalConfig || {};
 
+const preferBrandPngAsset = (configuredPath, pngFallbackPath) => {
+  if (!configuredPath) return pngFallbackPath;
+  // When brand assets are local files, prefer PNG to avoid SVG rendering edge-cases.
+  if (
+    configuredPath.startsWith('/brand-assets/') &&
+    configuredPath.endsWith('.svg')
+  ) {
+    return pngFallbackPath;
+  }
+  return configuredPath;
+};
+
 const state = {
   apiChannelName,
   apiChannelThumbnail,
@@ -42,9 +54,12 @@ const state = {
   maximumFileUploadSize: resolveMaximumFileUploadSize(maximumFileUploadSize),
   hCaptchaSiteKey,
   installationName,
-  logo,
-  logoDark,
-  logoThumbnail,
+  logo: preferBrandPngAsset(logo, '/brand-assets/logo.png'),
+  logoDark: preferBrandPngAsset(logoDark, '/brand-assets/logo_dark.png'),
+  logoThumbnail: preferBrandPngAsset(
+    logoThumbnail,
+    '/brand-assets/logo_thumbnail.png'
+  ),
   privacyURL,
   termsURL,
   widgetBrandURL,

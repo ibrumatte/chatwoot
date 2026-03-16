@@ -2,6 +2,14 @@ class GlobalConfig
   VERSION = 'V1'.freeze
   KEY_PREFIX = 'GLOBAL_CONFIG'.freeze
   DEFAULT_EXPIRY = 1.day
+  BRANDING_CONFIG_OVERRIDES = {
+    'INSTALLATION_NAME' => ENV.fetch('CHATWOOT_INSTALLATION_NAME', 'BrChat by BrJoy Tecnologia'),
+    'BRAND_NAME' => ENV.fetch('CHATWOOT_BRAND_NAME', 'BrChat by BrJoy Tecnologia'),
+    'BRAND_URL' => ENV.fetch('CHATWOOT_BRAND_URL', 'https://www.brjoy.com.br'),
+    'WIDGET_BRAND_URL' => ENV.fetch('CHATWOOT_WIDGET_BRAND_URL', 'https://www.brjoy.com.br'),
+    'TERMS_URL' => ENV.fetch('CHATWOOT_TERMS_URL', 'https://www.brjoy.com.br'),
+    'PRIVACY_URL' => ENV.fetch('CHATWOOT_PRIVACY_URL', 'https://www.brjoy.com.br')
+  }.freeze
 
   class << self
     def get(*args)
@@ -38,6 +46,9 @@ class GlobalConfig
     end
 
     def load_from_cache(config_key)
+      override_value = BRANDING_CONFIG_OVERRIDES[config_key]
+      return override_value if override_value.present?
+
       cache_key = "#{VERSION}:#{KEY_PREFIX}:#{config_key}"
       cached_value = $alfred.with { |conn| conn.get(cache_key) }
 
