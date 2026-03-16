@@ -3,7 +3,7 @@ class GlobalConfig
   KEY_PREFIX = 'GLOBAL_CONFIG'.freeze
   DEFAULT_EXPIRY = 1.day
   BRANDING_CONFIG_OVERRIDES = {
-    'INSTALLATION_NAME' => ENV.fetch('CHATWOOT_INSTALLATION_NAME', 'BrChat by BrJoy Tecnologia'),
+    'INSTALLATION_NAME' => ENV.fetch('CHATWOOT_INSTALLATION_NAME', 'BrChat'),
     'BRAND_NAME' => ENV.fetch('CHATWOOT_BRAND_NAME', 'BrChat by BrJoy Tecnologia'),
     'BRAND_URL' => ENV.fetch('CHATWOOT_BRAND_URL', 'https://www.brjoy.com.br'),
     'WIDGET_BRAND_URL' => ENV.fetch('CHATWOOT_WIDGET_BRAND_URL', 'https://www.brjoy.com.br'),
